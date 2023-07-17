@@ -1,2 +1,2 @@
 # WhatsupChat
-Chat web app implement with plain php jquery
+Chat web app implemented with plain php jquery
