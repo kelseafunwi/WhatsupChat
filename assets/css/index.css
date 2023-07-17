@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+section {
+    margin: 0;
+    width: 100% !important;
+}
+
+/* Credentials section */
+.credentials .logoname {
+    font-weight: 700;
+    font-size: 60px;
+    letter-spacing: -4px;
+    font-style: italic;
+}
+
+.credentials .chatbox {
+    width: 60%;
+    padding: 30px 20px;
+    border: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.credentials .chatbox:hover {
+    padding: 40px 30px;
+    border: 2px solid #e95420;
+}
+
+@media (max-width: 988px) {
+    .credentials .chatbox {
+        width: 100%;
+    }
+}
+
+.credentials input {
+    position: relative;
+    font-size: 27px;
+    padding: 10px 20px;
+    color: #000;
+    font-style: normal;
+    font-family: Roboto;
+}
+
+.credentials input:active, .credentials input:focus {
+    border: 2px solid #e95420;
+}
+
+.credentials button[type=submit] {
+    padding: 10px 40px;
+    font-size: 32px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.credentials .already {
+    font-size: 17px;
+    /* font-family: Georgia, 'Times New Roman', Times, serif; */
+    font-weight: 700;
+    z-index: 999;
+    color: #000;
+}
+
+.credentials .already a {
+    padding-left: 20px;
+    transition: 0.2s;
+}
+
+.credentials .already a:hover {
+    font-size: 18px;
+}
+
+.credentials span {
+    z-index: 99999;
+}
+
+.credentials span i {
+    font-size: 30px;
+    color: #000;
+    position: absolute;
+    right: 15px;
+    top: 5px;
+    z-index: 99999;
+}
+
+.credentials span:hover {
+    cursor: pointer;
+}
