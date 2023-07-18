@@ -10,6 +10,7 @@
     $fullname = isset($_GET['fullname']) ? $_GET['fullname'] : '';
     $email = isset($_GET['email']) ? $_GET['email'] : '';
     $error = isset($_GET['error']) ? $_GET['error'] : '';
+    $message = isset($_GET['message']) ? $_GET['message'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +30,7 @@
 <body class="d-flex vh-100 justify-content-center align-items-center bg-secondary">
    <section class="credentials">
         <div class="container-fluid">
-            <form id="form" action="../Actions/register.php" method="POST">
+            <form action="../Actions/register.php" method="POST">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-md-8 col-sm-12">
                         <div class="row d-flex align-items-center justify-content-around">
@@ -40,29 +41,28 @@
                                 </div>
 
                                 <?php if ($error) { ?>
-                                <div>
-                                    <div id="alert" class="alert alert-warning">
-                                        <?= $error ?>
+                                    <div>
+                                        <div id="alert" class="alert alert-warning">
+                                            <?= $error ?>
+                                        </div>
                                     </div>
-                                </div>
-
-                            <?php } ?>
+                                <?php } ?>
 
                                 <div class="input-group mb-3">
-                                    <input type="text" name="fullname" id="fullname" placeholder="Full Name" class="form-control" value="<?= $fullname ?>" required>
+                                    <input type="text" name="fullname" id="fullname" placeholder="Full Name" class="form-control" autocomplete="off" value="<?= $fullname ?>">
                                 </div>
                                 
                                 <div class="input-group mb-3">
-                                    <input name="email" id="email" type="email" placeholder="Email" class="form-control" value="<?= $email ?>" required>
+                                    <input name="email" id="email" type="email" placeholder="Email" class="form-control" autocomplete="off" value="<?= $email ?>">
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <input name="password" id="password" type="password" placeholder="Password" class="form-control" required>
+                                    <input type="password" placeholder="Password" name="password" class="form-control" >
                                     <span id="tooglePassvisibility"><i class="bi bi-eye"></i></span>
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <input name="passwordconfirm" id="passwordConfirm" type="password" name="passwordconfirm" placeholder="Confirm Password" class="form-control" required>
+                                    <input name="passwordconfirm" type="password" placeholder="Confirm Password" class="form-control" >
                                     <span id="tooglePassvisibility"><i class="bi bi-eye"></i></span>
                                 </div>
 

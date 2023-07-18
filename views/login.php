@@ -5,6 +5,10 @@
         header("Location: ./chatpage.php");
         exit;
     }
+
+    $email = isset($_GET['email']) ? $_GET['email'] : "";
+    $error = isset($_GET['error']) ? $_GET['error'] : '';
+    $message = isset($_GET['message']) ? $_GET['message'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -24,28 +28,40 @@
 <body class="d-flex vh-100 justify-content-center align-items-center bg-secondary">
    <section class="credentials">
         <div class="container-fluid">
-            <form action="../Actions/login.php" method="POST"">
+            <form action="../Actions/auth.php" method="POST">
                 <div class="row d-flex justify-content-center align-items-center">
                     <div class="col-md-8 col-sm-12">
                         <div class="row d-flex flex-column align-items-center justify-content-around">
                             <div class="chatbox shadow">
+                                <?php if ($message) { ?>
+                                    <div>
+                                        <div id="message" class="alert alert-success">
+                                            <?= $message ?>
+                                        </div>
+                                    </div>
+
+                                <?php } ?>
+
+                                <?php if ($error) { ?>
+                                    <div>
+                                        <div id="alert" class="alert alert-warning">
+                                            <?= $error ?>
+                                        </div>
+                                    </div>
+                                <?php } ?>
 
                                 <div class="my-2 mb-3 text-center">
                                     <img src="../assets/images/Screenshot 2023-07-16 at 21-06-13 Whatsup Chat.png" alt="">
                                 </div>
 
-                                <div>
-                                    <div class="alert alert-warning">
-                                        The email does not exist, Create an Account.    
-                                    </div>
-                                </div>
+                                
                                 
                                 <div class="input-group mb-3">
-                                    <input type="email" placeholder="Email" class="form-control" autofocus required>
+                                    <input type="email" value="<?= $email ?>" placeholder="Email" class="form-control" name="email" required>
                                 </div>
 
                                 <div class="input-group mb-3">
-                                    <input type="password" placeholder="Password" class="form-control" required>
+                                    <input type="password" name="password" placeholder="Password" class="form-control">
                                     <span id="tooglePassvisibility"><i class="bi bi-eye"></i></span>
                                 </div>
 
