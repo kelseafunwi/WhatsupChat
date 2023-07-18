@@ -18,8 +18,8 @@
     <title>Whatsup Chat</title>
 </head>
 <body>
-   <section class="container-fluid">
-        <div class="text-primary">Hello world</div>
+   <section id="chatpage" class="container-fluid">
+        
    </section> 
 
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
