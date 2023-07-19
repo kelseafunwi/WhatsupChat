@@ -37,14 +37,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_id`, `fullname`, `email`, `password`, `last_seen`, `created_at`) VALUES
-(8, 'Funwi Kelsea Ndohnwi', 'funwikelseandohnwi@gmail.com', '$2y$10$wUktobliH/z5u7d.OiU6BOLFz/TQX6hJnlcrmHHQbKOl5ehoVB7Ai', '2023-07-18 13:51:57', '2023-07-18 13:51:57'),
-(9, 'Funwi Princewill', 'princewill@gmail.com', '$2y$10$w5vkMNer7oLoOrMtzCWD9.z47TPtTXsiYAh7bqX/qaz0SUF6KBsYa', '2023-07-18 13:57:43', '2023-07-18 13:57:43');
-
---
 -- Indexes for dumped tables
 --
 

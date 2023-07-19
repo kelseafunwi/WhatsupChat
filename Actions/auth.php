@@ -3,7 +3,7 @@
 
     include '../config/dbConnection.php'; 
 
-    if (isset($_SESSION['whatsupchat_user_id'])) {
+    if (isset($_SESSION['whatsupchat_session_id'])) {
         header("Location: ./chatpage.php");
         exit;
     }
@@ -32,11 +32,12 @@
         $userInfo = $stmt1->fetch();
         if (password_verify($password, $userInfo['password'])) {
             // creating the session data
-            $_SESSION['whatsup_session_id'] = $userInfo['user_id'];
+            
+            $_SESSION['session_user_id'] = $userInfo['user_id'];
             $_SESSION['fullname'] = $userInfo['fullname'];
             $_SESSION['email'] = $userInfo['email'];
             
-            header("Location: ../chatpage.php");
+            header("Location: ../views/chatpage.php");
             return;
         } 
         $data = "email=$email";

@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['whatsupchat_whatsupchat_whatsupchat_user_id'])) {
+    if (!isset($_SESSION['session_user_id'])) {
         header("Location: ./login.php");
         exit;
     }

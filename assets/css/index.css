@@ -93,3 +93,101 @@ section {
 }
 
 /* Chatpage styling */
+.chatbody {
+    background: #111b21;
+}
+
+.chatbody {
+    height: 100%;
+    width: 100%;
+    color: #aebac1 !important   ;
+}
+
+.chatbody header {
+    background: #202c33;
+    height: 60px;
+}
+
+.chatbody .users {
+    width: 25%;
+    display: flex;
+    overflow: auto;
+    border-right: 0.3px solid #aebac1;
+}
+
+.chatbody .content {
+    width: 74%;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .chatbody .content {
+        width: 100%;
+    }
+}
+
+.chatbody .righticons i {
+    color: #aebac1 !important;
+    padding-right: 23px;
+}
+
+.chatbody .righticons i {
+    font-size: 20px;
+    font-weight: 600;   
+}
+
+.chatbody header .profile i {
+    font-size: 40px;
+    border-radius: 50%;
+    margin-left: 16px;
+}
+
+/* Working with the user section */
+.chatbody .search-div {
+    display: none;
+}
+
+.chatbody .search-div input {
+    background: #202c33;
+    color: #5d6c75;
+    border: 0px;
+    color: #fff;
+    font-weight: 300;
+}
+
+.chatbody .search-div input:focus   {
+    box-shadow: 0 0 0 .25rem rgba(13,110,253,.25); 
+    box-shadow: none;
+}
+
+.chatbody .search-div input::placeholder {
+    color: #5d6c75;
+    opacity: 1;
+}
+
+.chatbody .users .people-list {
+    flex: 1 1 auto;
+    border: 1px sol
+}
+
+.chatbody .users .people-list .profile i {
+    font-size: 40px;
+    border-radius: 50%;
+    margin-left: 16px;
+}
+
+.chatbody .users .people-list .userbox span {
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.chatbody .users .people-list .userbox.unread .message {
+    font-weight: bold;
+}
+
+.chatbody .users .people-list .userbox.read .message{
+    font-weight: 300;
+    font-size: 14px;
+}
+
+/* Working with the content section. */
