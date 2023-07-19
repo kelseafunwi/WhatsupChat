@@ -112,7 +112,8 @@ section {
     width: 25%;
     display: flex;
     overflow: auto;
-    border-right: 0.3px solid #aebac1;
+    scrollbar-width: thin;
+    border-right: 0.001em solid #aebac1;
 }
 
 .chatbody .content {
@@ -167,7 +168,7 @@ section {
 
 .chatbody .users .people-list {
     flex: 1 1 auto;
-    border: 1px sol
+    overflow: auto;
 }
 
 .chatbody .users .people-list .profile i {
@@ -191,3 +192,92 @@ section {
 }
 
 /* Working with the content section. */
+.chatbody .content .messages {
+    overflow: hdden;
+}
+
+.chatbody .content .messages .chat-container {
+    width: 91%;
+    padding: 20px 10px;
+    position: relative;
+}
+
+.chatbody .content .messages .message{
+    margin-top: 15px;
+    width: fit-content;
+    padding: 5px 10px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.chatbody .content .messages .message span {
+    position:absolute;
+    bottom: 0;
+    right: 10px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.chatbody .content .messages .message.sender {
+    background-color: #005c4b;
+    color: #e9edef;
+    margin-left: auto;
+}
+
+.chatbody .content .messages .message.receiver {
+    background-color: #202c33;
+    color: #bdc2c5;
+}
+
+.chatbody .content .btnPerson {
+    border: none;
+    background: none;
+    color: #aebac1;
+}
+
+.chatbody .content .messages {
+    flex: 1 1 auto;
+    overflow: auto;
+    position: relative;
+}
+
+.chatbody .content  section.userinput  {
+    height: 70px;
+    background: #202c33;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+}
+
+.chatbody .content section.userinput .inputbox {
+    flex: 1 1 auto;
+}
+
+.chatbody .content section.userinput .inputbox textarea {
+    background: #2a3942;
+    color: #5d6c75;
+    border: 0px;
+    color: #fff;
+    font-weight: 300;
+    /* padding: 13px 20px; */
+}
+
+.chatbody .content section.userinput .inputbox textarea::placeholder {
+    color: #5d6c75;
+    opacity: 1;
+}
+
+.chatbody .content section.userinput .inputbox textarea:focus   {
+    /* box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);  */
+    box-shadow: none;
+}
+
+.chatbody .content section.userinput .leftbuttons button,
+.chatbody .content section.userinput .rightbuttons button {
+    background: none;
+    border: none;
+    font-size: 34px;
+    color: #8696a0;
+    padding-right: 10px;
+    padding-left: 20px;
+} 
