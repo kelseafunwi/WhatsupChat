@@ -1,10 +1,42 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['session_user_id'])) {
+    if (!isset($_SESSION['whatsupchat_session_id'])) {
         header("Location: login.php");
         exit;
     }
+
+    // including the database configuration file
+    include '../config/dbConnection.php';
+
+    // include the user helper file that will provide methods to get and process information about the user
+    include '../helpers/users.php';
+
+    // Converts the online time into a string the user can understand
+    include '../helpers/timeAgo.php';
+
+    // Mark all the messages here as opened once we get in here
+    include '../helpers/opened.php';
+
+
+    // the conversation helper file will help us retrieve information that we will use to fill the configuration
+    include '../helpers/conversation.php';
+
+    if (isset($_GET['user'])) {
+        $chatWith = getUserFromid($_GET['user'], $conn);
+    } else {
+        header("Location: chatpage.php?user=".$_SESSION['whatsupchat_session_id']);
+        exit;
+    }
+    $allUsers = getAllUsers($conn);
+
+    include '../helpers/chats.php';
+
+    $chats = getChats($chatWith['user_id'], $_SESSION['whatsupchat_session_id'], $conn);
+
+    $allConversation = getConversation($_SESSION['whatsupchat_session_id'], $conn);
+
+    opened($chatWith['user_id'], $chats, $conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +58,7 @@
             <div class="users h-100 flex-column d-none d-md-flex">
                 <header class="w-100 d-flex">
                     <div class="profile">
-                        <a href="#"><i class="bg-secondary text-light bi bi-person-fill"></i></a>
+                        <a href="./settings.php"><i class="bg-secondary text-light bi bi-person-fill"></i></a>
                     </div>
                     <div class="ms-auto righticons d-flex align-middle align-items-center">
                         <a href="#" title="New Chat"><i class="bi bi-chat-left-text"></i></a>
@@ -38,148 +70,32 @@
                 </div>
 
                 <div class="people-list">
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
 
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
+                    <?php foreach($allUsers as $user) {?>
 
-                    <hr />
+                        <div class="userbox">
+                            <a class="d-flex" href="chatpage.php?user=<?= $user['user_id'] ?>">
+                                <div class="profile">
+                                    <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
+                                </div>
 
-                    <div class="userbox unread">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
+                                <span class="mt-2 ps-3"><span class="name"><?= $user['fullname'] ?> </span> <br /> <span class="message"><?= getUserLastMessage($_SESSION['whatsupchat_session_id'], $user['user_id'], $conn);?></span></span> 
+                            </a>
+                        </div>
 
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
+                        <hr />
 
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
-
-                    <div class="userbox">
-                        <a class="d-flex" href="#">
-                            <div class="profile">
-                                <i class="bg-secondary  align-middle text-light bi bi-person-fill"></i>
-                            </div>
-
-                            <span class="mt-2 ps-3"><span class="name">Funwi Kelsea</span> <br /> <span class="message">Hello how are you doing</span>n</span> 
-                        </a>
-                    </div>
-
-                    <hr />
+                    <?php } ?>
                 </div>
             </div>
             <div class="content h-100 d-flex flex-column">
                 <header class="w-100 d-flex">
                     <button class="btnPerson" type="submit">
                         <div class="profile d-flex">
-                            <a href="#">
+                            <a href="./settings.php">
                                 <i class="bg-secondary text-light bi bi-person-fill"></i>
                             </a>
-                            <span class="my-auto ps-2" class="name">Funwi Princewill</span>
+                            <span class="my-auto ps-2" class="name"><?=  $chatWith['fullname'] ?></span>
                         </div>
                     </button>
                     <div class="ms-auto righticons d-flex align-middle align-items-center">
@@ -187,98 +103,26 @@
                         <a href="#" title="Menu"><i class="bi bi-three-dots-vertical"></i></a>
                     </div>
                 </header>
-                <section class="messages">
-                    <div class="chat-container mx-auto">
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message receiver">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-
-                        <div class="message sender">
-                            <p>Good Morning Sir, How are you doing today ?</p>
-                            <span>11:30 am</span>  
-                        </div>
-                    </section>
+                <section id="messages" class="messages">
+                    <div id="chatcontainer" class="chat-container mx-auto">
+                        <?php if (!empty($chats)) { ?>
+                            <?php foreach ($chats as $chat) { 
+                                if ($chat['from_id'] == $_SESSION['whatsupchat_session_id'])     {
+                                    
+                            ?>
+                                <div class="message sender">
+                                    <p><?= $chat['message']  ?></p>
+                                    <span><?= $user['created_at'] ?></span>  
+                                </div>
+                            <?php } else {  ?>
+                                <div class="message receiver">
+                                <p><?= $chat['message']  ?></p>
+                                <span><?= $user['created_at'] ?></span>  
+                                </div>
+                            <?php } } ?>
+                        <?php } ?>
+                    </div>
+                </section>
                     <section class="userinput">
                         <div class="w-100 h-100 d-flex align-items-center align-middle">
                             <div class="leftbuttons text-nowrap">
@@ -287,11 +131,11 @@
                             </div>
 
                             <div class="inputbox">
-                                <textarea type="text" name="message" placeholder="Type a message" class="form-control"></textarea>
+                                <textarea id="message" type="text" name="message" placeholder="Type a message" class="form-control"></textarea>
                             </div>
 
                             <div class="rightbuttons">
-                                <button><i class="ri-send-plane-2-fill"></i></button>
+                                <button id="sendBtn"><i class="ri-send-plane-2-fill"></i></button>
                             </div>
                         </div>
                     </section>
@@ -305,9 +149,52 @@
     <script src="../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../vendor/aos/aos.js"></script>
     <script>
-        $(document).ready(function () {
-            
+        var scrollDown = function () {
+            $chatbody = document.getElementById('messages');
+            $chatbody.scrollTop =$chatbody.scrollHeight;
+        }
+        scrollDown();
+        
+        // transfering the data to the chat ajax when the user clicks send
+        $('#sendBtn').on('click', function () {
+            let message = $('#message').val();
+            console.log(message);
+            if (message == ' ' || message == '') return;
+            $.post('../ajax/insert.php', 
+                {
+                    to_id: <?= $chatWith['user_id'] ?>,
+                    message:message 
+                },
+                function (data, status) {
+                    $("#message").val("");
+                    $('#chatcontainer').append(data);
+                    scrollDown();
+                }
+            );
         });
+
+        let lastSeenUpdate = function () {
+            $.get('../ajax/update_last_seen.php');
+        }
+
+        lastSeenUpdate();
+
+        setInterval(lastSeenUpdate, 5000);
+
+        let fetchData = function () {
+            $.post('../ajax/getMessage.php', 
+            {
+                to_id: <?= $chatWith['user_id'] ?>,
+            },
+            function (data, status) {
+                $("#chatcontainer").append(data);
+                if (data != " ") scrollDown();
+            })
+        }
+
+        fetchData();
+
+        setInterval(fetchData, 200);
     </script>
     <script src="../assets/js/index.js"></script>
 </body>

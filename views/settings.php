@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    if (!isset($_SESSION['session_user_id'])) {
+    if (!isset($_SESSION['whatsupchat_session_id'])) {
         header("Location: ./login.php");
         exit;
     }
@@ -22,7 +22,7 @@
 </head>
 <body>
    <section class="container-fluid">
-        <div class="text-primary">Hello world</div>
+        <button id="logoutBtn" class="btn btn-primary">Logout of this account</button>
    </section> 
 
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -31,7 +31,9 @@
     <script src="../vendor/aos/aos.js"></script>
     <script>
         $(document).ready(function () {
-            
+            $("#logoutBtn").on('click', function () {
+                $.get('../Actions/logout.php');
+            });
         });
     </script>
     <script src="../assets/js/index.js"></script>

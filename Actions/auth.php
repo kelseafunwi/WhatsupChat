@@ -3,6 +3,7 @@
 
     include '../config/dbConnection.php'; 
 
+    // Redirecting the user to the messaging page if the user is already logged in
     if (isset($_SESSION['whatsupchat_session_id'])) {
         header("Location: ./chatpage.php");
         exit;
@@ -33,7 +34,9 @@
         if (password_verify($password, $userInfo['password'])) {
             // creating the session data
             
-            $_SESSION['session_user_id'] = $userInfo['user_id'];
+            // Login the User is basically about creating a unique identification in which that user can access
+            // that identity from their browser (Each browser creates its own session in the server)
+            $_SESSION['whatsupchat_session_id'] = $userInfo['user_id'];
             $_SESSION['fullname'] = $userInfo['fullname'];
             $_SESSION['email'] = $userInfo['email'];
             
@@ -43,5 +46,11 @@
         $data = "email=$email";
         $error = "Incorrect Password";
         header("Location: ../views/login.php?$data&error=" . $error);  
+        exit;
+    } else {
+        $data = "email=$email";
+        $error = "The email does not exit";
+        header("Location: ../views/login.php?$data&error=" . $error);
+        exit;  
     }
 ?>
